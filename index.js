@@ -3,6 +3,7 @@ const app = express();
 const cors = require('cors')
 const http = require('http')
 const { Server } = require('socket.io')
+require('dotenv').config();
 
 //middleware
 app.use(cors())
