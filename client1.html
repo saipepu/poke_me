@@ -13,11 +13,11 @@
   <button onclick={sendMessage()}>Send Message</button>
 </body>
 <script defer>
-  const socket = io("http://localhost:3001", {
+  const socket = io("https://poke-me.herokuapp.com/", {
     widthCredentials: true,
     extraHeaders: {
       "Access-Control-Allow-Credentials": "true",
-      "Access-Control-Allow-Origin": "http://localhost:3001",
+      "Access-Control-Allow-Origin": "https://poke-me.herokuapp.com/",
     },
     transports: ['websocket']
   })
