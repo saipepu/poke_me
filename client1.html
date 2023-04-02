@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <script src="https://cdn.socket.io/4.6.0/socket.io.min.js" integrity="sha384-c79GN5VsunZvi+Q/WObgk2in0CbZsHnjEqvFxC5DxHn9lTfNce2WW6h2pH6u/kF+" crossorigin="anonymous"></script>
+  <title>Client 1</title>
+</head>
+<body>
+  <h1>Client 1</h1>
+  <input type="text" id="input"/>
+  <button onclick={sendMessage()}>Send Message</button>
+</body>
+<script defer>
+  const socket = io("http://localhost:3001", {
+    widthCredentials: true,
+    extraHeaders: {
+      "Access-Control-Allow-Credentials": "true",
+      "Access-Control-Allow-Origin": "http://localhost:3001",
+    },
+    transports: ['websocket']
+  })
+  const UserSocket = () => {
+    socket.on('server', (message) => {
+      console.log(message);
+    })
+    socket.emit('join_room', '123');
+    socket.on('receiveMessage', (message) => {
+      console.log('received', message);
+      message = 'Annonymouse -> ' + message;
+      const p = document.createElement('p')
+      p.innerHTML = message;
+      document.getElementsByTagName('body')[0].appendChild(p)
+    })
+  }
+  UserSocket();
+  const sendMessage = () => {
+    const input = document.getElementById('input').value;
+    let message = 'You -> ' + input;
+    const p = document.createElement('p')
+    p.innerHTML = message;
+    document.getElementsByTagName('body')[0].appendChild(p)
+    socket.emit('sendMessage', {room: '123', message: input})
+  }
+</script>
+</html>
