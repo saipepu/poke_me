@@ -30,7 +30,6 @@ const start = () => {
     })
     socket.on('disconnect', () => {
       console.log('A client')
-      collection.watch().close();
     })
   })
 }
